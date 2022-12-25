@@ -18,7 +18,7 @@
 
 - WTForms==3.0.1
 
--Werkzeug==2.0.0
+- Werkzeug==2.0.0
 
 
 
