@@ -1,7 +1,7 @@
 from market import app # harus dipanggil lagi karena program berjalan terpisah, di define lagi
 from market.models import Item,User #import usernya untuk di setting di validate
 from market import db #agar bisa make db.session.add dibawah
-from flask import render_template, redirect, url_for ## nah si redirect ini mau dipake dibawah, dan url_for itu akan kebuka ketika dia mencet button dia bawaan flask #karena masih error, di define lagi
+from flask import render_template, redirect, url_for, flash ## nah si redirect ini mau dipake dibawah, dan url_for itu akan kebuka ketika dia mencet button dia bawaan flask #karena masih error, di define lagi
 
 #Keperluan untuk routes
 from market.models import Item #untuk menuhin syarat Item.query.all()
@@ -33,4 +33,8 @@ def register_page():
         db.session.commit() #biasanya kalo udh register ke website, kita pindah ke halaman lain kan, nah kita arahin ke /market:
         return redirect(url_for('market_page')) #url_for untuk ketika dipencet, kita arah kemana ? kita 'redirect' ke market_page
     
+    if form.errors != {}: #artinya, kalo gaada error yang masuk ke dictionary 
+        for err_msg in form.errors.values(): 
+            flash (f'There was an error with creating a user: {err_msg}', category='danger')
+
     return render_template('register.html', form=form) 
