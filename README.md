@@ -18,6 +18,10 @@
 
 - WTForms==3.0.1
 
+- flask-bcrypt==1.0.1
+
+- flask-login==0.5.0
+
 - Werkzeug==2.0.0
 
 

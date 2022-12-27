@@ -1,4 +1,5 @@
 from market import db
+from market import bcrypt
 
 class User(db.Model):
     id= db.Column(db.Integer(), primary_key=True)
@@ -9,8 +10,14 @@ class User(db.Model):
     budget         = db.Column(db.Integer(), nullable=False, default=1000) #uang yang dimiliki user
     items          = db.relationship('Item', backref='owned_user', lazy=True)
 
-    def __repr__(self):
-        return f'Item {self.username}'
+    @property
+    def password(self): 
+        return self.password #I have new property, and I basically return it back when user wants it
+    
+    @password.setter 
+    def password (self, plain_text_password): #we execute some lines of codes before actually set a password to an user instances
+        #overwrite si password_hash di atas 
+        self.password_hash = bcrypt.generate_password_hash(plain_text_password).decode('utf-8') 
     
 #models / kolom dari db
 #model item dibawah ajaa

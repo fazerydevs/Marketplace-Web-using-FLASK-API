@@ -34,7 +34,7 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="{{ url_for('login_page') }}">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('register_page') }}">Register</a>
@@ -45,7 +45,7 @@
     </nav>
     <!-- Navigation bar ends -->
 
-        <!--flash setup starts-->
+        <!--catching erros/flash setup starts-->
         {% with messages = get_flashed_messages(with_categories=true) %} 
             {% if messages %} 
                 {% for category, message in messages %}
@@ -58,7 +58,7 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <!--flash setup ends-->
+        <!--flash setup ends-->  
 
         {% block content %}
         {% endblock %}

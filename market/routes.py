@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, flash ## nah si redirect i
 
 #Keperluan untuk routes
 from market.models import Item #untuk menuhin syarat Item.query.all()
-from market.forms import RegisterForm
+from market.forms import RegisterForm, LoginForm
 
 
 #ROUTES
@@ -26,7 +26,7 @@ def register_page():
         user_to_create = User(
                             username=form.username.data,
                             email_address=form.email_address.data,
-                            password_hash=form.password1.data
+                            password=form.password1.data 
                             ) #ini caranya passing isi fields 
         
         db.session.add(user_to_create) #untuk add session ke db kita
@@ -38,3 +38,8 @@ def register_page():
             flash (f'There was an error with creating a user: {err_msg}', category='danger')
 
     return render_template('register.html', form=form) 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    form = LoginForm()
+    return render_template('login.html', form=form) 
