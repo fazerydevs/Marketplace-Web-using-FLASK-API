@@ -5,35 +5,57 @@
 {% endblock %}
 
 {% block content %}
-    <table class="table table-hover table-dark">
-        <thead>
-            <tr>
-                <!-- the column here -->
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Barcode</th>
-                <th scope="col">Price</th>
-                <th scope="col">Desc.</th>
-                <th scope="col">Options</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- rows here -->
-            {% for item in items %} 
-            <tr>
-                <td>{{ item.id }}</td> 
-                <td>{{ item.name }}</td>
-                <td>{{ item.barcode }}</td>
-                <td>{{ item.price }}$</td>
-                <td>{{ item.description}}</td>
-                <!--nambahin button-->
-                <td>
-                    <button class="btn btn-outline btn-info">More Info</button>
-                    <button class="btn btn-outline btn-success">Purchase this Item</button>
-                </td>
-                <!--nambahin button-->
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class = "row" style="margin-top:20px; margin-left:20px"> 
+    <!--Available Item Starts-->
+    <div class="col-8">
+        <h2>Available Items</h2>
+        <p2> Click on one of the Items to start buying</p2>
+        <br>
+
+        <table class="table table-hover table-dark">
+            <thead>
+                <tr>
+                    <!-- the column here -->
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Barcode</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- rows here -->
+                {% for item in items %} 
+                <tr>
+                    <td>{{ item.id }}</td> 
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.barcode }}</td>
+                    <td>{{ item.price }}$</td>
+                    <td>{{ item.description}}</td>
+                    <!--nambahin button-->
+                    <td>
+                        <button class="btn btn-outline btn-info">More Info</button>
+                        <button class="btn btn-outline btn-success">Purchase this Item</button>
+                    </td>
+                    <!--nambahin button-->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!--Available Item Ends-->
+
+    <!--Owned Item Starts-->
+    <div class="col-4">
+        <h2>Owned Items</h2>
+        <p2> Click on one of the Items to start Selling</p2>
+        <br>
+    
+
+    <!--Owned Item Ends-->
+    </div>
+</div>
+
+
 {% endblock %}
