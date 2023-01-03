@@ -3,8 +3,8 @@
 
 <h3 align="center">The Screenshots:</h3>
  
-<h4 allign="center">HomePage</h4>
 ![](Images/Home1.jpg)
+![](Images/get started.jpg)
 
 
 <h3 align="left">Languages:</h3>
