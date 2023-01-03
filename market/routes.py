@@ -1,7 +1,7 @@
-from market import app # harus dipanggil lagi karena program berjalan terpisah, di define lagi
-from market.models import Item,User #import usernya untuk di setting di validate
-from market import db #agar bisa make db.session.add dibawah
-from flask import render_template, redirect, url_for, flash, request ## nah si redirect ini mau dipake dibawah, dan url_for itu akan kebuka ketika dia mencet button dia bawaan flask #karena masih error, di define lagi
+from market import app 
+from market.models import Item, User 
+from market import db #to execute db lines
+from flask import render_template, redirect, url_for, flash, request 
 
 
 from market.models import Item 
@@ -41,7 +41,7 @@ def market_page():
         s_item_object = Item.query.filter_by(name=sold_item).first()
         if s_item_object: 
             if current_user.can_sell(s_item_object):
-                s_item_object.sell(current_user) #Letgo of ownership + gave money back 
+                s_item_object.sell(current_user) #Let go of ownership + give money back 
 
                 flash(f'Congratulations! You sold {s_item_object.name} for {s_item_object.price}$', category='success')
 
@@ -50,7 +50,6 @@ def market_page():
 
         return redirect(url_for('market_page'))
     
-
 
     if request.method == "GET":
         items = Item.query.filter_by(owner=None)
@@ -61,22 +60,23 @@ def market_page():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
-    form = RegisterForm() #tarik RegisterForm, jangan lupa'()' agar dia menjadi instance bukan variabel
-    if form.validate_on_submit(): ##### ini untuk validate nya
+    form = RegisterForm() #'()' is necessary to get it as an instance, not variable 
+    if form.validate_on_submit(): #This is to submitting, #theres 2 function from form. It's built in, and that is validate_ & on_submit 
         user_to_create = User(
                             username=form.username.data,
                             email_address=form.email_address.data,
                             password=form.password1.data 
-                            ) #ini caranya passing isi fields 
+                            ) #this is how to pass fields content
         
-        db.session.add(user_to_create) #untuk add session ke db kita
-        db.session.commit() #biasanya kalo udh register ke website, kita pindah ke halaman lain kan, nah kita arahin ke /market:
+        db.session.add(user_to_create) #adding data to db
+        db.session.commit() 
         
         #if user is registered successfully, they are autmatically logged in: 
         login_user(user_to_create)
         flash(f'Account created successfully! You are now logged in as {user_to_create}', category='success')
         
-        return redirect(url_for('market_page')) #if user is registered successfully, 'redirect' to market_page
+        #if user is registered successfully, 'redirect' to market_page:
+        return redirect(url_for('market_page')) 
     
     if form.errors != {}: #means, if it catches an error / dictionary is not empty
         for err_msg in form.errors.values(): 
@@ -89,7 +89,7 @@ def register_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
     form = LoginForm()
-    if form.validate_on_submit(): #theres 2 function from form. built in, that is validate_ on_submit 
+    if form.validate_on_submit(): 
         attempted_user = User.query.filter_by(username=form.username.data).first() #variable to  validate username
         if attempted_user and attempted_user.check_password_correction(
                 attempted_password=form.password.data

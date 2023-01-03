@@ -13,27 +13,28 @@
         </title>
     </head>
     <body>
-        <!--navbar here-->
-            <!-- Navigation bar starts -->
+        
+    <!-- Navigation bar start -->
+        <!--NavBar Left side start-->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="{{ url_for('home_page') }}">Fazerydev's market</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-targets="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- Isi Navigation Bar Start -->
             <ul class="navbar-nav mr-auto">
-                <!--navbar func start-->
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url_for('home_page') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('market_page') }}">Market</a>
                 </li>
-                <!--navbar func stop-->
             </ul>
-            {% if current_user.is_authenticated %} 
+        <!--NavBar Left side end-->
 
+        <!--NavBar Right side start-->
+            {% if current_user.is_authenticated %} 
                 <ul class="navbar-nav">
                     <li class="nav-item"> 
                         <a class="nav-link" style="color: lawngreen; font-weight:bold">
@@ -61,8 +62,8 @@
                 </ul>
 
             {% endif %}
+        <!--NavBar Right side end-->
 
-            <!-- Isi Navigation Bar ends -->
         </div>
     </nav>
     <!-- Navigation bar ends -->
@@ -84,11 +85,10 @@
 
         {% block content %}
         {% endblock %}
-        <!--future Content Here-->
 
 
         <!--optional Javascript-->
-        <!--jQuery first, then Popper.js, the Bootstrap Js-->
+        <!--jQuery first, then Popper.js, then Bootstrap Js-->
         <script src='https://kit.fontawesome.com/a076d05399.js'></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class = "row" style="margin-top:20px; margin-left:20px"> 
-    <!--Available Item Starts-->
+    <!--Available Item Start-->
     <div class="col-8">
         <h2>Available Items</h2>
         <p2> Click on one of the Items to start Buying</p2>
@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- rows here -->
+                <!-- rows start -->
                 {% for item in items %} 
                 {% include 'includes/items_modals.html' %}
                 <tr>
@@ -36,18 +36,19 @@
                     <td>{{ item.price }}$</td>
                     <td>{{ item.description}}</td>
                     
-                    <!--nambahin button-->
+                    <!--adding button start-->
                     <td>
                         <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ item.id }}">More Info</button>
                         <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm-{{ item.id }}">Purchase this Item</button>
                     </td>
-                    <!--nambahin button-->
+                    <!--adding button end-->
                 </tr>
                 {% endfor %}
+                <!-- rows end -->
             </tbody>
         </table>
     </div>
-    <!--Available Item Ends-->
+    <!--Available Item End-->
 
 
     <!--Owned Item Starts-->
