@@ -1,9 +1,9 @@
 <h1 align="center">Build Marketplace Web using Flask API</h1>
 <h3 align="center">Build Simple Marketplace that can buy, sell, register, and login.</h3>
 
-<h3 align="center">Screenshots</h3>
+<h3 align="center">The Screenshots:</h3>
  
-HomePage
+<h6 allign="center">HomePage</h6>
 ![](Images/Home1.jpg)
 
 
