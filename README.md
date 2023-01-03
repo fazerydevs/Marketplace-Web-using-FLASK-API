@@ -2,8 +2,7 @@
 <h3 align="center">Build Simple Marketplace that can buy, sell, register, and login.</h3>
 
 <h3 align="center">Screenshots
-[Home Page]
-(https://github.com/fazerydevs/Marketplace-Web-using-FLASK-API/blob/main/Images/Home1.jpg?raw=true)
+![Home Page](https://github.com/fazerydevs/Marketplace-Web-using-FLASK-API/blob/main/Images/Home1.jpg?raw=true)
 </h3>
 
 <h3 align="left">Languages:</h3>
