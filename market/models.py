@@ -53,6 +53,7 @@ class User(db.Model, UserMixin):
 #Models for Item
 class Item(db.Model):
     id          = db.Column(db.Integer(), primary_key=True) #id in models is compulsory, because flask is automatically differentiate every object with ID 
+    name        = db.Column(db.String(length=30), nullable=False, unique=True)
     price       = db.Column(db.Integer(), nullable=False)
     barcode     = db.Column(db.String(length=20), nullable=False, unique=True)
     description = db.Column(db.String(length=1024), nullable=False)
