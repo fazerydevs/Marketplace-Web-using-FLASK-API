@@ -3,7 +3,7 @@
 
 <h3 align="center">The Screenshots:</h3>
  
-<h6 allign="center">HomePage</h6>
+<h4 allign="center">HomePage</h4>
 ![](Images/Home1.jpg)
 
 
