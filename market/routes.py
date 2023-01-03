@@ -1,14 +1,12 @@
 from market import app # harus dipanggil lagi karena program berjalan terpisah, di define lagi
 from market.models import Item,User #import usernya untuk di setting di validate
 from market import db #agar bisa make db.session.add dibawah
-from flask import render_template, redirect, url_for, flash ## nah si redirect ini mau dipake dibawah, dan url_for itu akan kebuka ketika dia mencet button dia bawaan flask #karena masih error, di define lagi
-from market import bcrypt
+from flask import render_template, redirect, url_for, flash, request ## nah si redirect ini mau dipake dibawah, dan url_for itu akan kebuka ketika dia mencet button dia bawaan flask #karena masih error, di define lagi
 
 
-#Keperluan untuk routes
-from market.models import Item #untuk menuhin syarat Item.query.all()
-from market.forms import RegisterForm, LoginForm
-from flask_login import login_user, logout_user, login_required
+from market.models import Item 
+from market.forms import RegisterForm, LoginForm, PurchaseItemForm, SellItemForm
+from flask_login import login_user, logout_user, login_required, current_user
 
 
 #ROUTES
@@ -17,11 +15,49 @@ from flask_login import login_user, logout_user, login_required
 def home_page():
     return render_template('home.html')
 
-@app.route('/market')
+
+
+@app.route('/market', methods=['GET', 'POST'])
 @login_required
 def market_page():
-    items = Item.query.all()
-    return render_template('market.html', items=items)
+    #Purchasing Logic
+    purchase_form=PurchaseItemForm()
+    selling_form=SellItemForm()
+    if request.method == "POST": #similiar to form.validate_on_submit()
+        purchased_item = request.form.get('purchased_item') # purchased_item come from identifier in item_modals.html, the output is ={{item.name}}
+        p_item_object = Item.query.filter_by(name=purchased_item).first() #for grabbing object itself to be used below
+        if p_item_object: #means if not null
+            if current_user.can_purchase(p_item_object): #can_purchase coming from models.py defined fun
+                p_item_object.buy(current_user) #assign ownership after confirmation
+                #buy() comes from models.py
+
+                flash(f'Congratulations! You purchased {p_item_object.name} for {p_item_object.price}$', category='success')
+
+            else:
+                flash(f'Sorry, your budget is not enough to buy {p_item_object.name} for {p_item_object.price}$', category='danger')
+
+        #Selling Logic
+        sold_item=request.form.get('sold_item')
+        s_item_object = Item.query.filter_by(name=sold_item).first()
+        if s_item_object: 
+            if current_user.can_sell(s_item_object):
+                s_item_object.sell(current_user) #Letgo of ownership + gave money back 
+
+                flash(f'Congratulations! You sold {s_item_object.name} for {s_item_object.price}$', category='success')
+
+            else:
+                flash(f"Sorry, something went wrong with selling {p_item_object.name}", category='danger')
+
+        return redirect(url_for('market_page'))
+    
+
+
+    if request.method == "GET":
+        items = Item.query.filter_by(owner=None)
+        owned_items= Item.query.filter_by(owner=current_user.id)
+        return render_template('market.html', items=items, purchase_form=purchase_form, selling_form=selling_form, owned_items=owned_items)
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
@@ -38,7 +74,7 @@ def register_page():
         
         #if user is registered successfully, they are autmatically logged in: 
         login_user(user_to_create)
-        flash(f'Account Created Successfully!, You are now logged in as {user_to_create}', category='success')
+        flash(f'Account created successfully! You are now logged in as {user_to_create}', category='success')
         
         return redirect(url_for('market_page')) #if user is registered successfully, 'redirect' to market_page
     
@@ -47,6 +83,8 @@ def register_page():
             flash (f'There was an error with creating a user: {err_msg}', category='danger')
 
     return render_template('register.html', form=form) 
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
@@ -65,6 +103,8 @@ def login_page():
             flash('Username and Password are not match! Please try again', category='danger')
 
     return render_template('login.html', form=form) 
+
+
 
 @app.route('/logout')
 def logout_page():
